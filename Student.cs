@@ -34,8 +34,33 @@ namespace ApplicationConsole
         // Calculer la moyenne
         public double Average()
         {
-         
+            double total_grades = 0;
+            int nb_grades = 0;
+            foreach (var course in grades)
+            {
+                foreach (var grade in course.Value)
+                {
+                    total_grades += grade.grade;
+                    nb_grades++;
+                }
+            }
+            if (nb_grades == 0)
+            {
+                return 0.0;
+            }
+            else
+            {
+                return total_grades / nb_grades;
+            }
         }
+
+
+
+        //14/06 MODIFS
+
+
+
+
 
 
 
