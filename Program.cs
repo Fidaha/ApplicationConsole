@@ -12,22 +12,16 @@ namespace ApplicationConsole
     {
         static void Main(string[] args)
         {
+         // Exemple d'instanciation d'un étudiant
+         //  Student student = new Student(1, "Doe", "John", "01/01/2000");
+         // Exemple d'instanciation d'un cours
+         // Course course = new Course(1, "Mathématiques");
 
-            
-
-            // Exemple d'instanciation d'un étudiant
-          //  Student student = new Student(1, "Doe", "John", "01/01/2000");
-
-            // Exemple d'instanciation d'un cours
-           // Course course = new Course(1, "Mathématiques");
-
-
-
-           // if (args.Length < 1)
-            //{
-             //   Console.WriteLine("Veuillez fournir le chemin du fichier JSON de données en argument.");
-            //    return;
-          //  }
+           /* if (args.Length < 1)
+            {
+                Console.WriteLine("Veuillez fournir le chemin du fichier JSON de données en argument.");
+                return;
+             } */
 
             string filePath = "C:/Users/hafid/ApplicationConsole/data.json";
             Notebook notebook = LoadNotebook(filePath);
