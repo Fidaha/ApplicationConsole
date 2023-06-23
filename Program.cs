@@ -408,7 +408,8 @@ namespace ApplicationConsole
 
         static void SaveNotebook(Notebook notebook, string filePath)
         {
-            string json = JsonConvert.SerializeObject(notebook);
+            //string json = JsonConvert.SerializeObject(notebook);
+            string json = JsonConvert.SerializeObject(notebook, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
 

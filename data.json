@@ -1,1 +1,55 @@
-{"Students":[{"Id":1,"LastName":"Doe","FirstName":"John","DateOfBirth":"2000-01-01","Grades":[{"CourseName":"Anglais","Score":6.0,"Appreciation":"Aie aie aie, �a va pas du tout..."}]},{"Id":2,"LastName":"Smith","FirstName":"Jane","DateOfBirth":"2001-05-10","Grades":[]},{"Id":3,"LastName":"Charaf","FirstName":"Hafida","DateOfBirth":"2000-01-05","Grades":[{"CourseName":"Programmation","Score":16.0,"Appreciation":"Tres bien"}]}],"Courses":[{"Id":2,"Name":"Anglais"},{"Id":3,"Name":"Programmation"},{"Id":4,"Name":"Chimie"}]}
+{
+  "Students": [
+    {
+      "Id": 1,
+      "LastName": "Doe",
+      "FirstName": "John",
+      "DateOfBirth": "2000-01-01",
+      "Grades": [
+        {
+          "CourseName": "Anglais",
+          "Score": 6.0,
+          "Appreciation": "Aie aie aie, �a va pas du tout..."
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "LastName": "Smith",
+      "FirstName": "Jane",
+      "DateOfBirth": "2001-05-10",
+      "Grades": []
+    },
+    {
+      "Id": 3,
+      "LastName": "Charaf",
+      "FirstName": "Hafida",
+      "DateOfBirth": "2000-01-05",
+      "Grades": [
+        {
+          "CourseName": "Programmation",
+          "Score": 16.0,
+          "Appreciation": "Tres bien"
+        }
+      ]
+    }
+  ],
+  "Courses": [
+    {
+      "Id": 2,
+      "Name": "Anglais"
+    },
+    {
+      "Id": 3,
+      "Name": "Programmation"
+    },
+    {
+      "Id": 4,
+      "Name": "Chimie"
+    },
+    {
+      "Id": 5,
+      "Name": "Arabe"
+    }
+  ]
+}
