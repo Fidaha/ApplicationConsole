@@ -1,56 +1,23 @@
-﻿using System;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationConsole
 {
     public class Course
     {
-        // Les attributs
-        public int Id;
-        public string Name;
+        public int Id { get; }
+        public string Name { get; }
 
-        public static List<Course> liste_course = new List<Course>();
-
-
-        //Les méthodes
-
-        // Lister les cours existants
-        public static void ListCourse()
+        public Course(int id, string name)
         {
-            foreach (var course in liste_course)
-            {
-                Console.WriteLine(course.Id + " - " + course.Name);
-            }
+            Id = id;
+            Name = name;
         }
-
-        // Ajouter un nouveau cours au programme
-        public static void AddCourse(Course course)
-        {
-            liste_course.Add(course);
-        }
-
-        // Supprimer un cours par son identifiant
-        public static void RemoveCourse(int id) 
-        {
-            foreach(var course in liste_course)
-            {
-                if (course.Id == id)
-                {
-                    liste_course.Remove(course);
-                    break;
-                }
-            }
-        }
-
-
-
-
-
-        //14/06 MODIFS
-
-
     }
+
+
 }

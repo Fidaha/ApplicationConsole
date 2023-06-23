@@ -1,92 +1,415 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 
 namespace ApplicationConsole
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            // string json = File.ReadAllText(args[0]);
-            // Program obj = JsonConvert.DeserializeObject<Program>(json);
 
-            // Instantiation de la classe Student
-            Student student1 = new Student();
             
 
-            student1.Id = 1;
-            student1.FirstName = "Dupont";
-            student1.LastName = "Jean";
-            student1.DateBirth = new DateTime(2000, 1, 1);
-            student1.AddGrade("Maths", 12.5, "Peut mieux faire");
-            student1.AddGrade("Anglais", 15.0, "Bien");
-            student1.AddGrade("Français", 10.0, "Insuffisant");
+            // Exemple d'instanciation d'un étudiant
+            Student student = new Student(1, "Doe", "John", "01/01/2000");
 
-            Console.WriteLine("La moyenne est de l'éléve " + student1.LastName + " " + student1.FirstName + " est de : " + student1.Average());
+            // Exemple d'instanciation d'un cours
+            Course course = new Course(1, "Mathématiques");
 
-            // Instantiation de la classe Course
-            Course course1 = new Course();
 
-            course1.Id = 1;
-            course1.Name = "Maths";
-            Course.AddCourse(course1);
 
-            Course course2 = new Course();
+           // if (args.Length < 1)
+            //{
+             //   Console.WriteLine("Veuillez fournir le chemin du fichier JSON de données en argument.");
+            //    return;
+          //  }
 
-            course2.Id = 2;
-            course2.Name = "Français";
-            Course.AddCourse(course2);
+            string filePath = "C:/Users/hafid/ApplicationConsole/data.json";
+            Notebook notebook = LoadNotebook(filePath);
 
-            Course course3 = new Course();
+            Console.WriteLine("Bienvenue dans mon application !");
+            bool exit = false;
 
-            course3.Id = 3;
-            course3.Name = "Anglais";
-            Course.AddCourse(course3);
-
-            Course.ListCourse();
-
-            Course.RemoveCourse(1);
-
-            Console.WriteLine(" La liste des cours après la supression du cours nméro 1 est : ");
-
-            Course.ListCourse();
-
-            // =======================================test=========================================
-
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine("Information sur l'élève : ");
-
-            // Ask the user to choice between course and student.
-
-            Console.WriteLine("Choose an option from the following list:");
-            Console.WriteLine("\ts - Student");
-            Console.WriteLine("\tc - Course");
-            Console.Write("Your option ? : ");
-
-            // Use a switch statement
-            switch (Console.ReadLine())
+            while (!exit)
             {
-                case "s":
-                    Console.WriteLine($"La moyenne est de l'éléve " + student1.LastName + " " + student1.FirstName + " est de : " + student1.Average());
-                    break;
-                case "c":
-                    Console.WriteLine($" La liste des cours après la supression du cours nméro 1 est : ");
-                    Course.ListCourse();
-                    break;
+                Console.WriteLine();
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.WriteLine("Menu principal :");
+                Console.WriteLine(" ");
+                Console.WriteLine(" ");
+                Console.WriteLine("1. Elèves");
+                Console.WriteLine(" ");
+                Console.WriteLine("2. Cours");
+                Console.WriteLine(" ");
+                Console.WriteLine("3. Quitter");
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.WriteLine(" ");
+                Console.Write("Votre choix : ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        ShowStudentMenu(notebook);
+                        break;
+                    case "2":
+                        ShowCourseMenu(notebook);
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                        break;
+                }
             }
-            //------------------------------------------------------------------------------------------------
-            //14/06 MODIFS
 
+            SaveNotebook(notebook, filePath);
+        }
 
+        static void ShowStudentMenu(Notebook notebook)
+        {
+            bool backToMain = false;
 
+            while (!backToMain)
+            {
+                Console.WriteLine();
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.WriteLine("Menu Elèves :");
+                Console.WriteLine(" ");
+                Console.WriteLine(" ");
+                Console.WriteLine("1. Lister les élèves");
+                Console.WriteLine(" ");
+                Console.WriteLine("2. Créer un nouvel élève");
+                Console.WriteLine(" ");
+                Console.WriteLine("3. Consulter un élève existant");
+                Console.WriteLine(" ");
+                Console.WriteLine("4. Ajouter une note et une appréciation");
+                Console.WriteLine(" ");
+                Console.WriteLine("5. Revenir au menu principal");
+                Console.WriteLine(" ");
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.Write("Votre choix : ");
 
+                string choice = Console.ReadLine();
 
+                switch (choice)
+                {
+                    case "1":
+                        ListStudents(notebook);
+                        break;
+                    case "2":
+                        CreateStudent(notebook);
+                        break;
+                    case "3":
+                        ShowStudentDetails(notebook);
+                        break;
+                    case "4":
+                        AddGrade(notebook);
+                        break;
+                    case "5":
+                        backToMain = true;
+                        break;
+                    default:
+                        Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                        break;
+                }
+            }
+        }
 
+        static void ShowCourseMenu(Notebook notebook)
+        {
+            bool backToMain = false;
 
+            while (!backToMain)
+            {
+                Console.WriteLine();
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.WriteLine("Menu Cours :");
+                Console.WriteLine(" ");
+                Console.WriteLine(" ");
+                Console.WriteLine("1. Lister les cours");
+                Console.WriteLine(" ");
+                Console.WriteLine("2. Ajouter un nouveau cours");
+                Console.WriteLine(" ");
+                Console.WriteLine("3. Supprimer un cours");
+                Console.WriteLine(" ");
+                Console.WriteLine("4. Revenir au menu principal");
+                Console.WriteLine(" ");
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.Write("Votre choix : ");
 
+                string choice = Console.ReadLine();
 
+                switch (choice)
+                {
+                    case "1":
+                        ListCourses(notebook);
+                        break;
+                    case "2":
+                        AddCourse(notebook);
+                        break;
+                    case "3":
+                        DeleteCourse(notebook);
+                        break;
+                    case "4":
+                        backToMain = true;
+                        break;
+                    default:
+                        Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                        break;
+                }
+            }
+        }
 
+        static void ListStudents(Notebook notebook)
+        {
+            Console.WriteLine("Liste des élèves :");
+            Console.WriteLine(" ");
 
+            foreach (var student in notebook.Students)
+            {
+                Console.WriteLine($"- {student.LastName} {student.FirstName}");
+            }
+        }
 
+        static void CreateStudent(Notebook notebook)
+        {
+            Console.WriteLine("Création d'un nouvel élève :");
+            Console.WriteLine(" ");
+            Console.Write("Entrez le nom : ");
+            Console.WriteLine(" ");
+            string lastName = Console.ReadLine();
+            Console.Write("Entrez le prénom : ");
+            Console.WriteLine(" ");
+            string firstName = Console.ReadLine();
+            Console.Write("Entrez la date de naissance : ");
+            Console.WriteLine(" ");
+            string dateOfBirth = Console.ReadLine();
+
+            int maxId = notebook.Students.Count > 0 ? notebook.Students.Max(s => s.Id) : 0;
+            int newId = maxId + 1;
+
+            var student = new Student(newId, lastName, firstName, dateOfBirth);
+            notebook.Students.Add(student);
+
+            Console.WriteLine("Nouvel élève créé avec succès.");
+        }
+
+        static void ShowStudentDetails(Notebook notebook)
+        {
+            Console.WriteLine("Consultation d'un élève existant :");
+            Console.WriteLine(" ");
+            Console.Write("Entrez l'identifiant de l'élève : ");
+            Console.WriteLine(" ");
+            int studentId;
+
+            while (!int.TryParse(Console.ReadLine(), out studentId))
+            {
+                Console.Write("Veuillez entrer un identifiant valide : ");
+            }
+
+            var student = FindStudentById(notebook, studentId);
+
+            if (student == null)
+            {
+                Console.WriteLine("Aucun élève trouvé avec cet identifiant.");
+                return;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(" ");
+            Console.WriteLine("Informations sur l'élève :");
+            Console.WriteLine($"Nom               : {student.LastName}");
+            Console.WriteLine($"Prénom            : {student.FirstName}");
+            Console.WriteLine($"Date de naissance : {student.DateOfBirth}");
+            Console.WriteLine(" ");
+
+            Console.WriteLine();
+            Console.WriteLine("Résultats scolaires :");
+            Console.WriteLine(" ");
+
+            if (student.Grades.Count == 0)
+            {
+                Console.WriteLine("Aucune note enregistrée pour cet élève.");
+            }
+            else
+            {
+                foreach (var grade in student.Grades)
+                {
+                    Console.WriteLine($"    Cours : {grade.CourseName}");
+                    Console.WriteLine($"        Note : {grade.Score}/20");
+                    Console.WriteLine($"        Appréciation : {grade.Appreciation}");
+                }
+
+                double average = student.GetAverage();
+                Console.WriteLine();
+                Console.WriteLine($"    Moyenne : {average}/20");
+            }
+        }
+
+        static void AddGrade(Notebook notebook)
+        {
+            Console.WriteLine("Ajout d'une note et d'une appréciation :");
+            Console.Write("Entrez l'identifiant de l'élève : ");
+            int studentId;
+
+            while (!int.TryParse(Console.ReadLine(), out studentId))
+            {
+                Console.Write("Veuillez entrer un identifiant valide : ");
+            }
+
+            var student = FindStudentById(notebook, studentId);
+
+            if (student == null)
+            {
+                Console.WriteLine("Aucun élève trouvé avec cet identifiant.");
+                return;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Cours disponibles :");
+
+            foreach (var cours in notebook.Courses)
+            {
+                Console.WriteLine($"- {cours.Name}");
+            }
+
+            Console.Write("Entrez le nom du cours : ");
+            string courseName = Console.ReadLine();
+
+            var course = FindCourseByName(notebook, courseName);
+
+            if (course == null)
+            {
+                Console.WriteLine("Aucun cours trouvé avec ce nom.");
+                return;
+            }
+
+            Console.Write("Entrez la note (sur 20) : ");
+            double score;
+
+            while (!double.TryParse(Console.ReadLine(), out score) || score < 0 || score > 20)
+            {
+                Console.Write("Veuillez entrer une note valide (entre 0 et 20) : ");
+            }
+
+            Console.Write("Entrez l'appréciation : ");
+            string appreciation = Console.ReadLine();
+
+            var grade = new Grade(courseName, score, appreciation);
+            student.Grades.Add(grade);
+
+            Console.WriteLine("Note et appréciation ajoutées avec succès.");
+        }
+
+        static void ListCourses(Notebook notebook)
+        {
+            Console.WriteLine("Liste des cours :");
+
+            foreach (var course in notebook.Courses)
+            {
+                Console.WriteLine($"- {course.Name}");
+            }
+        }
+
+        static void AddCourse(Notebook notebook)
+        {
+            Console.WriteLine("Ajout d'un nouveau cours :");
+            Console.Write("Entrez le nom du cours : ");
+            string courseName = Console.ReadLine();
+
+            int maxId = notebook.Courses.Count > 0 ? notebook.Courses.Max(c => c.Id) : 0;
+            int newId = maxId + 1;
+
+            var course = new Course(newId, courseName);
+            notebook.Courses.Add(course);
+
+            Console.WriteLine("Nouveau cours ajouté avec succès.");
+        }
+
+        static void DeleteCourse(Notebook notebook)
+        {
+            Console.WriteLine("Suppression d'un cours :");
+            Console.Write("Entrez l'identifiant du cours : ");
+            int courseId;
+
+            while (!int.TryParse(Console.ReadLine(), out courseId))
+            {
+                Console.Write("Veuillez entrer un identifiant valide : ");
+            }
+
+            var course = FindCourseById(notebook, courseId);
+
+            if (course == null)
+            {
+                Console.WriteLine("Aucun cours trouvé avec cet identifiant.");
+                return;
+            }
+
+            Console.WriteLine($"Voulez-vous vraiment supprimer le cours '{course.Name}' ? (O/N)");
+            string confirmation = Console.ReadLine();
+
+            if (confirmation.ToUpper() == "O")
+            {
+                notebook.Courses.Remove(course);
+                RemoveCourseFromStudents(notebook, course.Name);
+                Console.WriteLine("Cours supprimé avec succès.");
+            }
+        }
+
+        static void RemoveCourseFromStudents(Notebook notebook, string courseName)
+        {
+            foreach (var student in notebook.Students)
+            {
+                student.Grades.RemoveAll(g => g.CourseName == courseName);
+            }
+        }
+
+        static Student FindStudentById(Notebook notebook, int id)
+        {
+            return notebook.Students.FirstOrDefault(s => s.Id == id);
+        }
+
+        static Course FindCourseByName(Notebook notebook, string name)
+        {
+            return notebook.Courses.FirstOrDefault(c => c.Name == name);
+        }
+
+        static Course FindCourseById(Notebook notebook, int id)
+        {
+            return notebook.Courses.FirstOrDefault(c => c.Id == id);
+        }
+
+        static void SaveNotebook(Notebook notebook, string filePath)
+        {
+            string json = JsonConvert.SerializeObject(notebook);
+            File.WriteAllText(filePath, json);
+        }
+
+        static Notebook LoadNotebook(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<Notebook>(json);
+            }
+            else
+            {
+                return new Notebook();
+            }
         }
     }
+
+   
+
+  
+
+
 }

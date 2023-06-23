@@ -1,71 +1,39 @@
-﻿using System;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationConsole
 {
-    internal class Student
+    public class Student
     {
-        // Les attributs de la classe Student
-        public int Id { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
+        public int Id { get; }
+        public string LastName { get; }
+        public string FirstName { get; }
+        public string DateOfBirth { get; }
+        public List<Grade> Grades { get; }
 
-        public DateTime DateBirth { get; set; }
-
-        public Dictionary<string, List<(double grade,string appreciation)>> grades = new Dictionary<string,
-        List<(double grade, string appreciation)>>();
-
-
-        // Les méthodes
-
-        // Ajouter une note
-        public void AddGrade(string course, double grade, string appreciation)
+        public Student(int id, string lastName, string firstName, string dateOfBirth)
         {
-            if (!grades.ContainsKey(course))
-            {
-                grades[course] = new List<(double grade, string appreciation)>();
-            }
-            grades[course].Add((grade, appreciation));
+            Id = id;
+            LastName = lastName;
+            FirstName = firstName;
+            DateOfBirth = dateOfBirth;
+            Grades = new List<Grade>();
         }
 
-        // Calculer la moyenne
-        public double Average()
+        public double GetAverage()
         {
-            double total_grades = 0;
-            int nb_grades = 0;
-            foreach (var course in grades)
+            if (Grades.Count == 0)
             {
-                foreach (var grade in course.Value)
-                {
-                    total_grades += grade.grade;
-                    nb_grades++;
-                }
+                return 0;
             }
-            if (nb_grades == 0)
-            {
-                return 0.0;
-            }
-            else
-            {
-                return total_grades / nb_grades;
-            }
+
+            double sum = Grades.Sum(g => g.Score);
+            return sum / Grades.Count;
         }
-
-
-
-        //14/06 MODIFS
-
-
-
-
-
-
-
-
-
-
     }
+
 }

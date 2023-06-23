@@ -1,0 +1,49 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Doe",
+            "dateOfBirth": "2000-01-01",
+            "grades": [
+                {
+                    "courseId": 1,
+                    "score": 18,
+                    "comment": "Continue comme ça !"
+                },
+                {
+                    "courseId": 2,
+                    "score": 6,
+                    "comment": "Aie aie aie, ça va pas du tout..."
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "dateOfBirth": "2001-05-10",
+            "grades": [
+                {
+                    "courseId": 1,
+                    "score": 15.5,
+                    "comment": "Bon travail !"
+                }
+            ]
+        }
+    ],
+    "courses": [
+        {
+            "id": 1,
+            "name": "Mathématiques"
+        },
+        {
+            "id": 2,
+            "name": "Anglais"
+        },
+        {
+            "id": 3,
+            "name": "Programmation"
+        }
+    ]
+}
