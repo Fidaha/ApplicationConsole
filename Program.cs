@@ -16,10 +16,10 @@ namespace ApplicationConsole
             
 
             // Exemple d'instanciation d'un étudiant
-            Student student = new Student(1, "Doe", "John", "01/01/2000");
+          //  Student student = new Student(1, "Doe", "John", "01/01/2000");
 
             // Exemple d'instanciation d'un cours
-            Course course = new Course(1, "Mathématiques");
+           // Course course = new Course(1, "Mathématiques");
 
 
 
@@ -73,6 +73,7 @@ namespace ApplicationConsole
             SaveNotebook(notebook, filePath);
         }
 
+        // Menu Etudiant
         static void ShowStudentMenu(Notebook notebook)
         {
             bool backToMain = false;
@@ -123,6 +124,7 @@ namespace ApplicationConsole
             }
         }
 
+        // Menu Cours
         static void ShowCourseMenu(Notebook notebook)
         {
             bool backToMain = false;
@@ -168,8 +170,10 @@ namespace ApplicationConsole
             }
         }
 
+        // Liste des étudiants
         static void ListStudents(Notebook notebook)
         {
+            Console.WriteLine(" ");
             Console.WriteLine("Liste des élèves :");
             Console.WriteLine(" ");
 
@@ -179,8 +183,10 @@ namespace ApplicationConsole
             }
         }
 
+        // Créer un étudiant
         static void CreateStudent(Notebook notebook)
         {
+            Console.WriteLine(" ");
             Console.WriteLine("Création d'un nouvel élève :");
             Console.WriteLine(" ");
             Console.Write("Entrez le nom : ");
@@ -202,8 +208,10 @@ namespace ApplicationConsole
             Console.WriteLine("Nouvel élève créé avec succès.");
         }
 
+        //Afficher un étudiant
         static void ShowStudentDetails(Notebook notebook)
         {
+            Console.WriteLine(" ");
             Console.WriteLine("Consultation d'un élève existant :");
             Console.WriteLine(" ");
             Console.Write("Entrez l'identifiant de l'élève : ");
@@ -226,6 +234,7 @@ namespace ApplicationConsole
             Console.WriteLine();
             Console.WriteLine(" ");
             Console.WriteLine("Informations sur l'élève :");
+            Console.WriteLine(" ");
             Console.WriteLine($"Nom               : {student.LastName}");
             Console.WriteLine($"Prénom            : {student.FirstName}");
             Console.WriteLine($"Date de naissance : {student.DateOfBirth}");
@@ -243,7 +252,8 @@ namespace ApplicationConsole
             {
                 foreach (var grade in student.Grades)
                 {
-                    Console.WriteLine($"    Cours : {grade.CourseName}");
+                    Console.WriteLine();
+                    Console.WriteLine($"        Cours : {grade.CourseName}");
                     Console.WriteLine($"        Note : {grade.Score}/20");
                     Console.WriteLine($"        Appréciation : {grade.Appreciation}");
                 }
@@ -254,6 +264,7 @@ namespace ApplicationConsole
             }
         }
 
+        // Ajouter une note
         static void AddGrade(Notebook notebook)
         {
             Console.WriteLine("Ajout d'une note et d'une appréciation :");
@@ -276,9 +287,9 @@ namespace ApplicationConsole
             Console.WriteLine();
             Console.WriteLine("Cours disponibles :");
 
-            foreach (var cours in notebook.Courses)
+            foreach (var cour in notebook.Courses)
             {
-                Console.WriteLine($"- {cours.Name}");
+                Console.WriteLine($"- {cour.Name}");
             }
 
             Console.Write("Entrez le nom du cours : ");
@@ -309,9 +320,12 @@ namespace ApplicationConsole
             Console.WriteLine("Note et appréciation ajoutées avec succès.");
         }
 
+        // Lister les cours
         static void ListCourses(Notebook notebook)
         {
+            Console.WriteLine("");
             Console.WriteLine("Liste des cours :");
+            Console.WriteLine("");
 
             foreach (var course in notebook.Courses)
             {
@@ -319,9 +333,12 @@ namespace ApplicationConsole
             }
         }
 
+        // Ajouter un cours
         static void AddCourse(Notebook notebook)
         {
+            Console.WriteLine("");
             Console.WriteLine("Ajout d'un nouveau cours :");
+            Console.WriteLine("");
             Console.Write("Entrez le nom du cours : ");
             string courseName = Console.ReadLine();
 
@@ -334,6 +351,7 @@ namespace ApplicationConsole
             Console.WriteLine("Nouveau cours ajouté avec succès.");
         }
 
+        // Supprimer un cours
         static void DeleteCourse(Notebook notebook)
         {
             Console.WriteLine("Suppression d'un cours :");
@@ -372,20 +390,27 @@ namespace ApplicationConsole
             }
         }
 
+        // Trouver un Etudiant avec son Id
         static Student FindStudentById(Notebook notebook, int id)
         {
             return notebook.Students.FirstOrDefault(s => s.Id == id);
         }
+
+
+        //Trouver un cours avec son nom
 
         static Course FindCourseByName(Notebook notebook, string name)
         {
             return notebook.Courses.FirstOrDefault(c => c.Name == name);
         }
 
+        // trouver un cours avec son Id
         static Course FindCourseById(Notebook notebook, int id)
         {
             return notebook.Courses.FirstOrDefault(c => c.Id == id);
         }
+
+        // Gestion du fichier json
 
         static void SaveNotebook(Notebook notebook, string filePath)
         {

@@ -8,13 +8,15 @@
             "grades": [
                 {
                     "courseId": 1,
+                    "courseName": "Mathematiques",
                     "score": 18,
-                    "comment": "Continue comme ça !"
+                    "appreciation": "Continue comme ça !"
                 },
                 {
                     "courseId": 2,
+                    "courseName": "Anglais",
                     "score": 6,
-                    "comment": "Aie aie aie, ça va pas du tout..."
+                    "appreciation": "Aie aie aie, ça va pas du tout..."
                 }
             ]
         },
@@ -26,8 +28,9 @@
             "grades": [
                 {
                     "courseId": 1,
+                    "courseName": "Mathematiques",
                     "score": 15.5,
-                    "comment": "Bon travail !"
+                    "appreciation": "Bon travail !"
                 }
             ]
         }
@@ -35,7 +38,7 @@
     "courses": [
         {
             "id": 1,
-            "name": "Mathématiques"
+            "name": "Mathematiques"
         },
         {
             "id": 2,
